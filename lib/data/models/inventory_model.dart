@@ -79,6 +79,20 @@ class InventoryItem {
         supplier: "Fort",
         image: const Base64Encoder().convert(
             'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png'
+                .codeUnits)),
+    InventoryItem(
+        id: _uuid.v4(),
+        code: 2,
+        name: "TOO LONG NAME FOR INVENTORY BED SHEET SINGLE",
+        qty: 10,
+        cost: 100,
+        price: 200,
+        description: "BED SHEET SINGLE",
+        category: "BED SHEET",
+        brand: "VS",
+        supplier: "Fort",
+        image: const Base64Encoder().convert(
+            'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png'
                 .codeUnits))
   ];
 

@@ -22,13 +22,22 @@ class ExDataTable extends StatelessWidget {
       lmRatio: 2,
       smRatio: 0.5,
       columnSpacing: 10,
-      fixedLeftColumns: 2,
+      dataRowHeight: 55,
+      fixedLeftColumns: 3,
       horizontalMargin: 10,
       isVerticalScrollBarVisible: true,
       isHorizontalScrollBarVisible: true,
       scrollController: ScrollController(),
       headingRowColor: MaterialStateProperty.all<Color>(
-          Theme.of(context).colorScheme.secondaryContainer),
+          Theme.of(context).colorScheme.primaryContainer),
+      dataRowColor: MaterialStateProperty.all<Color>(
+        Theme.of(context).colorScheme.secondaryContainer.withOpacity(0.4),
+      ),
+      dividerThickness: 2,
+      decoration: BoxDecoration(
+        color:
+            Theme.of(context).colorScheme.secondaryContainer.withOpacity(0.2),
+      ),
     );
   }
 }

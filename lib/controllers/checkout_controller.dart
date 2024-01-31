@@ -5,13 +5,12 @@ import 'package:mini_pos/ui/components/checkout_tab_pane.dart';
 class CheckoutTabPaneController extends GetxController {
   RxInt checkoutTabPaneSelected = 0.obs;
   RxList<CheckoutTabPane> checkoutTabPaneList = <CheckoutTabPane>[
-    const CheckoutTabPane(),
-    const CheckoutTabPane(),
-    const CheckoutTabPane(),
+    CheckoutTabPane(),
+    CheckoutTabPane(),
   ].obs;
 
   void addNewTab() {
-    checkoutTabPaneList.add(const CheckoutTabPane());
+    checkoutTabPaneList.add(CheckoutTabPane());
   }
 
   void removeTab(int index) {
@@ -39,32 +38,21 @@ class CheckoutTabPaneController extends GetxController {
   }
 }
 
-class CheckoutItemListController extends GetxController {
+class CheckoutItemListController {
   RxList<CheckoutItem> checkoutItemList = <CheckoutItem>[
-    CheckoutItem(
-      id: RxString("1"),
-      code: RxInt(1),
-      name: RxString("Item 1"),
-      avQty: RxInt(20),
-      ordQty: RxInt(5),
-      priceItem: RxInt(100),
-      category: RxString('Category 1'),
-      brand: RxString('Brand 1'),
-      supplier: RxString('Supplier 1'),
-      image: null,
-    ),
-    CheckoutItem(
-      id: RxString("2"),
-      code: RxInt(1),
-      name: RxString("Item 2"),
-      avQty: RxInt(20),
-      ordQty: RxInt(5),
-      priceItem: RxInt(100),
-      category: RxString('Category 2'),
-      brand: RxString('Brand 1'),
-      supplier: RxString('Supplier 2'),
-      image: null,
-    ),
+    CheckoutItem.initial()
+    // CheckoutItem(
+    //   id: RxString("2"),
+    //   code: RxInt(1),
+    //   name: RxString("Item 2"),
+    //   avQty: RxInt(20),
+    //   ordQty: RxInt(5),
+    //   priceItem: RxInt(100),
+    //   category: RxString('Category 2'),
+    //   brand: RxString('Brand 1'),
+    //   supplier: RxString('Supplier 2'),
+    //   image: null,
+    // ),
   ].obs;
 
   void addItem(CheckoutItem item) {

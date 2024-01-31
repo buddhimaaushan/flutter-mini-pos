@@ -42,7 +42,7 @@ class Checkout extends StatelessWidget {
                         : Theme.of(context)
                             .colorScheme
                             .secondaryContainer
-                            .withOpacity(0.2)),
+                            .withOpacity(0.4)),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     const RoundedRectangleBorder(
                   // borderRadius: BorderRadius.only(

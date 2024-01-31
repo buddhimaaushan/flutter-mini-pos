@@ -42,4 +42,20 @@ class CheckoutItem {
       image: json['image'],
     );
   }
+
+  factory CheckoutItem.initial() {
+    return CheckoutItem(
+      id: RxString("initial"),
+      code: RxInt(0),
+      name: RxString("Search Item"),
+      avQty: RxInt(0),
+      ordQty: RxInt(0),
+      priceItem: RxInt(0),
+      category: RxString('null'),
+      brand: RxString('null'),
+      supplier: RxString('null'),
+      image: null,
+      description: null,
+    );
+  }
 }
