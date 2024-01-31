@@ -31,32 +31,32 @@ class SidebarListItem {
     SidebarListItem(
       title: "Checkout",
       icon: Icons.check_box,
-      view: Checkout(),
+      view: const Checkout(),
     ),
     SidebarListItem(
       title: "Inventory",
       icon: Icons.inventory,
-      view: Inventory(),
+      view: const Inventory(),
     ),
     SidebarListItem(
       title: "Category",
       icon: Icons.account_tree,
-      view: Category(),
+      view: const Category(),
     ),
     SidebarListItem(
       title: "Supplier",
       icon: Icons.group,
-      view: Supplier(),
+      view: const Supplier(),
     ),
     SidebarListItem(
       title: "Brand",
       icon: Icons.business,
-      view: Brand(),
+      view: const Brand(),
     ),
     SidebarListItem(
       title: "Theme",
       icon: Icons.palette,
-      view: AppTheme(),
+      view: const AppTheme(),
     ),
   ];
 }
