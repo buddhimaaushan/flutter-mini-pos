@@ -25,16 +25,23 @@ class CheckoutTabPane extends StatelessWidget {
         child: ExDataTable(headers: [
           DataColumn2(
               label: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(0),
                 child: Container(
+                  width: 40,
+                  height: 40,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    color: Theme.of(context)
-                        .colorScheme
-                        .primaryContainer
-                        .withOpacity(0.5),
-                  ),
+                      borderRadius: BorderRadius.circular(50),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .secondaryContainer
+                          .withOpacity(0.5),
+                      border: Border.all(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onPrimaryContainer
+                            .withOpacity(0.5),
+                      )),
                   child: Text(checkoutTabPaneController
                       .checkoutTabPaneSelected.value
                       .toString()),
