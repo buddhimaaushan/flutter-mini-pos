@@ -24,10 +24,21 @@ class CheckoutTabPane extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         child: ExDataTable(headers: [
           DataColumn2(
-              label: Center(
-                child: Text(checkoutTabPaneController
-                    .checkoutTabPaneSelected.value
-                    .toString()),
+              label: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .primaryContainer
+                        .withOpacity(0.5),
+                  ),
+                  child: Text(checkoutTabPaneController
+                      .checkoutTabPaneSelected.value
+                      .toString()),
+                ),
               ),
               size: ColumnSize.S),
           const DataColumn2(label: Text("Code"), size: ColumnSize.S),
@@ -46,7 +57,7 @@ class CheckoutTabPane extends StatelessWidget {
               in checkoutItemListController.checkoutItemList.indexed)
             DataRow(
               cells: <DataCell>[
-                DataCell(item.id == "initial"
+                DataCell(item.id.value == "initial"
                     ? const Padding(
                         padding: EdgeInsets.all(8),
                         child: Icon(Icons.arrow_right_alt))
@@ -132,6 +143,10 @@ class CheckoutTabPane extends StatelessWidget {
   }
 
   Widget _buildOrderTextField(CheckoutItem item) {
+    TextEditingController textEditingController =
+        TextEditingController.fromValue(TextEditingValue(
+      text: item.ordQty.value.toString(),
+    ));
     return Container(
       margin: const EdgeInsets.only(top: 8, bottom: 6, right: 8),
       decoration: BoxDecoration(
@@ -139,11 +154,14 @@ class CheckoutTabPane extends StatelessWidget {
       ),
       clipBehavior: Clip.antiAlias,
       child: TextFormField(
-        initialValue: item.ordQty.toString(),
-        keyboardType: TextInputType.number,
-        onFieldSubmitted: (val) {
-          item.ordQty.value = int.parse(val);
-        },
+        key: UniqueKey(),
+        controller: textEditingController,
+        keyboardType: const TextInputType.numberWithOptions(
+          signed: false,
+          decimal: false,
+        ),
+        onFieldSubmitted: (value) =>
+            _handleOrderQty(textEditingController, value, item),
         decoration: InputDecoration(
           border: InputBorder.none,
           filled: true,
@@ -155,5 +173,21 @@ class CheckoutTabPane extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _handleOrderQty(TextEditingController textEditingController,
+      String value, CheckoutItem item) {
+    textEditingController.value = TextEditingValue(
+      text: value.isEmpty || int.parse(value) <= 1
+          ? 1.toString()
+          : int.parse(value) > item.avQty.value
+              ? item.avQty.value.toString()
+              : value,
+    );
+    if (value.isNotEmpty &&
+        int.parse(value) >= 1 &&
+        int.parse(value) <= item.avQty.value) {
+      item.ordQty.value = int.parse(value);
+    }
   }
 }
