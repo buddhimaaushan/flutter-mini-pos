@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mini_pos/controllers/sidebar_controller.dart';
 import 'package:mini_pos/data/models/sidebar_model.dart';
-import 'package:mini_pos/ui/components/sidebar.dart';
+import 'package:mini_pos/ui/components/sidebar/sidebar.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);

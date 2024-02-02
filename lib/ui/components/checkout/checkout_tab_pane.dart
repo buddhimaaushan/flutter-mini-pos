@@ -5,6 +5,8 @@ import 'package:mini_pos/controllers/checkout_controller.dart';
 import 'package:mini_pos/data/models/checkout_model.dart';
 import 'package:mini_pos/data/models/inventory_model.dart';
 import 'package:mini_pos/ui/components/ex_data_table.dart';
+import 'package:mini_pos/ui/components/ex_drop_down_menu.dart';
+import 'package:mini_pos/ui/components/ex_text_form_field.dart';
 
 class CheckoutTabPane extends StatelessWidget {
   CheckoutTabPane({Key? key}) : super(key: key);
@@ -109,105 +111,74 @@ class CheckoutTabPane extends StatelessWidget {
 
   Widget _buildItemDropdownMenu(CheckoutItem item) {
     return Container(
-      margin: const EdgeInsets.only(top: 8, bottom: 6, right: 8),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: DropdownMenu(
-        key: UniqueKey(),
-        expandedInsets: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-        onSelected: (value) {
-          InventoryItem inventory = InventoryItem.inventories
-              .firstWhere((element) => element.id == value);
-          if (item.id.value == "initial") {
-            checkoutItemListController.addItem(CheckoutItem.initial());
-          }
-          item.id.value = inventory.id;
-          item.code.value = inventory.code;
-          item.name.value = inventory.name;
-          item.avQty.value = inventory.qty;
-          item.ordQty.value = 1;
-          item.priceItem.value = inventory.price;
-          item.category.value = inventory.category;
-          item.brand.value = inventory.brand;
-          item.supplier.value = inventory.supplier;
-          item.image?.value = inventory.image!;
-          item.description?.value = inventory.description!;
-        },
-        // label: Text(item.name.value),
-        dropdownMenuEntries: [
-          for (final inventory in InventoryItem.inventories)
-            DropdownMenuEntry(
-              value: inventory.id,
-              label: inventory.name,
-            )
-        ],
-        enableFilter: true,
-        enableSearch: true,
-        hintText: item.name.value,
-        textStyle: const TextStyle(fontSize: 12),
-        inputDecorationTheme: InputDecorationTheme(
-          hintStyle: const TextStyle(fontSize: 12),
-          border: InputBorder.none,
-          floatingLabelBehavior: FloatingLabelBehavior.never,
-          filled: true,
+        margin: const EdgeInsets.only(top: 8, bottom: 6, right: 8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: ExDropdownMenu(
+          hintText: item.name.value,
           fillColor: Theme.of(Get.context!)
               .colorScheme
               .secondaryContainer
               .withOpacity(item.id.value == "initial" ? 1 : 0.2),
-          contentPadding: const EdgeInsets.only(left: 15, right: 5, bottom: 6),
-        ),
-      ),
-    );
+          dropdownMenuEntries: [
+            for (final inventory in InventoryItem.inventories)
+              DropdownMenuEntry(
+                value: inventory.id,
+                label: inventory.name,
+              ),
+          ],
+          onSelected: (value) {
+            InventoryItem inventory = InventoryItem.inventories
+                .firstWhere((element) => element.id == value);
+            if (item.id.value == "initial") {
+              checkoutItemListController.addItem(CheckoutItem.initial());
+            }
+            item.id.value = inventory.id;
+            item.code.value = inventory.code;
+            item.name.value = inventory.name;
+            item.avQty.value = inventory.qty;
+            item.ordQty.value = 1;
+            item.priceItem.value = inventory.price;
+            item.category.value = inventory.category;
+            item.brand.value = inventory.brand;
+            item.supplier.value = inventory.supplier;
+            item.image?.value = inventory.image!;
+            item.description?.value = inventory.description!;
+          },
+        ));
   }
 
   Widget _buildOrderTextField(CheckoutItem item) {
-    TextEditingController textEditingController =
-        TextEditingController.fromValue(TextEditingValue(
-      text: item.ordQty.value.toString(),
-    ));
     return Container(
-      margin: const EdgeInsets.only(top: 8, bottom: 6, right: 8),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: TextFormField(
-        key: UniqueKey(),
-        controller: textEditingController,
-        keyboardType: const TextInputType.numberWithOptions(
-          signed: false,
-          decimal: false,
+        margin: const EdgeInsets.only(top: 8, bottom: 6, right: 8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
         ),
-        onFieldSubmitted: (value) =>
-            _handleOrderQty(textEditingController, value, item),
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          filled: true,
+        clipBehavior: Clip.antiAlias,
+        child: ExTextFormField(
+          initialValue: item.ordQty.value.toString(),
           fillColor: Theme.of(Get.context!)
               .colorScheme
               .secondaryContainer
               .withOpacity(item.id.value == "initial" ? 1 : 0.2),
-          contentPadding: const EdgeInsets.only(left: 15, right: 5, bottom: 6),
-        ),
-      ),
-    );
+          onFieldSubmitted: (value, textEditingController) =>
+              _handleOrderQty(textEditingController, value, item),
+        ));
   }
 
   void _handleOrderQty(TextEditingController textEditingController,
       String value, CheckoutItem item) {
-    textEditingController.value = TextEditingValue(
-      text: value.isEmpty || int.parse(value) <= 1
-          ? 1.toString()
-          : int.parse(value) > item.avQty.value
-              ? item.avQty.value.toString()
-              : value,
-    );
-    if (value.isNotEmpty &&
-        int.parse(value) >= 1 &&
-        int.parse(value) <= item.avQty.value) {
-      item.ordQty.value = int.parse(value);
+    if (value.isEmpty || int.parse(value) <= 1) {
+      value = 1.toString();
+    } else if (int.parse(value) > item.avQty.value) {
+      value = item.avQty.value.toString();
     }
+
+    textEditingController.value = TextEditingValue(
+      text: value,
+    );
+    item.ordQty.value = int.parse(value);
   }
 }

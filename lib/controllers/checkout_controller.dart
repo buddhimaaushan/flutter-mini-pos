@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:mini_pos/data/models/checkout_model.dart';
-import 'package:mini_pos/ui/components/checkout_tab_pane.dart';
+import 'package:mini_pos/ui/components/checkout/checkout_tab_pane.dart';
 
 class CheckoutTabPaneController extends GetxController {
   RxInt checkoutTabPaneSelected = 0.obs;

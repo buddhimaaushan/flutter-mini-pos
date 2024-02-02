@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mini_pos/ui/components/brand.dart';
 import 'package:mini_pos/ui/components/category.dart';
-import 'package:mini_pos/ui/components/checkout.dart';
+import 'package:mini_pos/ui/components/checkout/checkout.dart';
 import 'package:mini_pos/ui/components/inventory.dart';
 import 'package:mini_pos/ui/components/supplier.dart';
 import 'package:mini_pos/ui/components/app_theme.dart';
