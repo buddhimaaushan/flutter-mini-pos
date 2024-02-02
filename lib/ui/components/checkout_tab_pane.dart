@@ -22,76 +22,88 @@ class CheckoutTabPane extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         clipBehavior: Clip.antiAlias,
-        child: ExDataTable(headers: [
-          DataColumn2(
-              label: Padding(
-                padding: const EdgeInsets.all(0),
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      color: Theme.of(context)
-                          .colorScheme
-                          .secondaryContainer
-                          .withOpacity(0.5),
-                      border: Border.all(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onPrimaryContainer
-                            .withOpacity(0.5),
-                      )),
-                  child: Text(checkoutTabPaneController
-                      .checkoutTabPaneSelected.value
-                      .toString()),
-                ),
-              ),
-              size: ColumnSize.S),
-          const DataColumn2(label: Text("Code"), size: ColumnSize.S),
-          const DataColumn2(label: Text("Item Name"), size: ColumnSize.L),
-          const DataColumn2(label: Text("Av Qty"), size: ColumnSize.M),
-          const DataColumn2(label: Text("Ord Qty"), size: ColumnSize.M),
-          const DataColumn2(label: Text("Price/Item"), size: ColumnSize.M),
-          const DataColumn2(label: Text("Price"), size: ColumnSize.M),
-          const DataColumn2(label: Text("Category"), size: ColumnSize.M),
-          const DataColumn2(label: Text("Brand"), size: ColumnSize.M),
-          const DataColumn2(label: Text("Supplier"), size: ColumnSize.M),
-          const DataColumn2(label: Text("Image"), size: ColumnSize.M),
-          const DataColumn2(label: Text("Description"), size: ColumnSize.M),
-        ], rows: [
-          for (final (idx, item)
-              in checkoutItemListController.checkoutItemList.indexed)
-            DataRow(
-              cells: <DataCell>[
-                DataCell(item.id.value == "initial"
-                    ? const Padding(
-                        padding: EdgeInsets.all(8),
-                        child: Icon(Icons.arrow_right_alt))
-                    : IconButton(
-                        onPressed: () {
-                          checkoutItemListController.removeItem(idx);
-                        },
-                        icon: const Icon(
-                          Icons.cancel,
-                          size: 15,
-                        ),
-                      )),
-                DataCell(Text(item.code.toString())),
-                DataCell(_buildItemDropdownMenu(item)),
-                DataCell(Text(item.avQty.toString())),
-                DataCell(_buildOrderTextField(item)),
-                DataCell(Text(item.priceItem.toString())),
-                DataCell(Text(
-                    (item.ordQty.value * item.priceItem.value).toString())),
-                DataCell(Text(item.category.value)),
-                DataCell(Text(item.brand.value)),
-                DataCell(Text(item.supplier.value)),
-                DataCell(Text(item.image.toString())),
-                DataCell(Text(item.description.toString())),
-              ],
-            )
-        ], isLoading: false)));
+        child: ExDataTable(
+            headers: _buildDataColumns(context),
+            rows: _buildDataRow(context),
+            isLoading: false)));
+  }
+
+  List<DataColumn> _buildDataColumns(BuildContext context) {
+    return [
+      DataColumn2(label: _buildTabNumber(context), size: ColumnSize.S),
+      const DataColumn2(label: Text("Code"), size: ColumnSize.S),
+      const DataColumn2(label: Text("Item Name"), size: ColumnSize.L),
+      const DataColumn2(label: Text("Av Qty"), size: ColumnSize.M),
+      const DataColumn2(label: Text("Ord Qty"), size: ColumnSize.M),
+      const DataColumn2(label: Text("Price/Item"), size: ColumnSize.M),
+      const DataColumn2(label: Text("Price"), size: ColumnSize.M),
+      const DataColumn2(label: Text("Category"), size: ColumnSize.M),
+      const DataColumn2(label: Text("Brand"), size: ColumnSize.M),
+      const DataColumn2(label: Text("Supplier"), size: ColumnSize.M),
+      const DataColumn2(label: Text("Image"), size: ColumnSize.M),
+      const DataColumn2(label: Text("Description"), size: ColumnSize.M),
+    ];
+  }
+
+  Widget _buildTabNumber(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(0),
+      child: Container(
+        width: 40,
+        height: 40,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50),
+            color: Theme.of(context)
+                .colorScheme
+                .secondaryContainer
+                .withOpacity(0.5),
+            border: Border.all(
+              color: Theme.of(context)
+                  .colorScheme
+                  .onPrimaryContainer
+                  .withOpacity(0.5),
+            )),
+        child: Text(
+            checkoutTabPaneController.checkoutTabPaneSelected.value.toString()),
+      ),
+    );
+  }
+
+  List<DataRow> _buildDataRow(BuildContext context) {
+    return [
+      for (final (idx, item)
+          in checkoutItemListController.checkoutItemList.indexed)
+        DataRow(
+          cells: <DataCell>[
+            DataCell(item.id.value == "initial"
+                ? const Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Icon(Icons.arrow_right_alt))
+                : IconButton(
+                    onPressed: () {
+                      checkoutItemListController.removeItem(idx);
+                    },
+                    icon: const Icon(
+                      Icons.cancel,
+                      size: 15,
+                    ),
+                  )),
+            DataCell(Text(item.code.toString())),
+            DataCell(_buildItemDropdownMenu(item)),
+            DataCell(Text(item.avQty.toString())),
+            DataCell(_buildOrderTextField(item)),
+            DataCell(Text(item.priceItem.toString())),
+            DataCell(
+                Text((item.ordQty.value * item.priceItem.value).toString())),
+            DataCell(Text(item.category.value)),
+            DataCell(Text(item.brand.value)),
+            DataCell(Text(item.supplier.value)),
+            DataCell(Text(item.image.toString())),
+            DataCell(Text(item.description.toString())),
+          ],
+        )
+    ];
   }
 
   Widget _buildItemDropdownMenu(CheckoutItem item) {
