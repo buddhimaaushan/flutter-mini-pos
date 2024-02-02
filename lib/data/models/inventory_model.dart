@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:uuid/uuid.dart';
 
 const Uuid _uuid = Uuid();
@@ -49,37 +47,30 @@ class InventoryItem {
 
   static List<InventoryItem> inventories = [
     InventoryItem(
-      id: _uuid.v4(),
-      code: 1,
-      name: "Towel",
-      qty: 50,
-      cost: 510,
-      price: 320,
-      description: "Towel",
-      category: "Towel",
-      brand: "CK",
-      supplier: "Maharagama",
-      // image: const Base64Encoder().convert(
-      //     'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png'
-      //         .codeUnits),
-      image: const Base64Encoder().convert(
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzKCVORxwpnpxc0EaGBYSHORpNvbxmdAnWb-FKVoUY8Q&s'
-              .codeUnits),
-    ),
-    InventoryItem(
         id: _uuid.v4(),
-        code: 2,
-        name: "BED SHEET SINGLE",
-        qty: 10,
-        cost: 100,
-        price: 200,
-        description: "BED SHEET SINGLE",
-        category: "BED SHEET",
-        brand: "VS",
-        supplier: "Fort",
-        image: const Base64Encoder().convert(
-            'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png'
-                .codeUnits)),
+        code: 1,
+        name: "Towel",
+        qty: 50,
+        cost: 510,
+        price: 320,
+        description: "Towel",
+        category: "Towel",
+        brand: "CK",
+        supplier: "Maharagama",
+        image: null),
+    InventoryItem(
+      id: _uuid.v4(),
+      code: 2,
+      name: "BED SHEET SINGLE",
+      qty: 10,
+      cost: 100,
+      price: 200,
+      description: "BED SHEET SINGLE",
+      category: "BED SHEET",
+      brand: "VS",
+      supplier: "Fort",
+      image: null,
+    ),
     InventoryItem(
         id: _uuid.v4(),
         code: 2,
@@ -91,9 +82,7 @@ class InventoryItem {
         category: "BED SHEET",
         brand: "VS",
         supplier: "Fort",
-        image: const Base64Encoder().convert(
-            'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png'
-                .codeUnits))
+        image: null)
   ];
 
   static getInventoryById(String id) {

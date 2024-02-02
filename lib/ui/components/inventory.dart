@@ -1,9 +1,142 @@
-import 'package:flutter/widgets.dart';
+import 'dart:convert';
+
+import 'package:data_table_2/data_table_2.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mini_pos/controllers/inventory_controller.dart';
+
+import 'ex_data_table.dart';
 
 class Inventory extends StatelessWidget {
   const Inventory({Key? key}) : super(key: key);
+
+  InventoryController get inventoryController => Get.put(InventoryController());
+
   @override
   Widget build(BuildContext context) {
-    return const Text("Inventory");
+    return Container(
+      padding: const EdgeInsets.all(10),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        const Row(),
+        _buildHeaderBar(context),
+        const SizedBox(height: 10),
+        Expanded(
+            child: Obx(() => Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                clipBehavior: Clip.antiAlias,
+                child: ExDataTable(
+                    fixedLeftColumns: 3,
+                    headers: _buildDataColumns(context),
+                    rows: _buildDataRow(context),
+                    isLoading: false)))),
+      ]),
+    );
+  }
+
+  Widget _buildHeaderBar(BuildContext context) {
+    return Container(
+      height: 60,
+      width: double.infinity,
+      decoration: BoxDecoration(
+          color:
+              Theme.of(context).colorScheme.secondaryContainer.withOpacity(0.2),
+          borderRadius: BorderRadius.circular(10)),
+      clipBehavior: Clip.antiAlias,
+      child: Row(
+        children: const [],
+      ),
+    );
+  }
+
+  List<DataColumn> _buildDataColumns(BuildContext context) {
+    return [
+      DataColumn2(label: _buildInventoryNumber(context), size: ColumnSize.S),
+      const DataColumn2(label: Text("Code"), size: ColumnSize.S),
+      const DataColumn2(label: Text("Item Name"), size: ColumnSize.L),
+      const DataColumn2(label: Text("Quantity"), size: ColumnSize.M),
+      const DataColumn2(label: Text("Cost"), size: ColumnSize.M),
+      const DataColumn2(label: Text("Price"), size: ColumnSize.M),
+      const DataColumn2(label: Text("Category"), size: ColumnSize.M),
+      const DataColumn2(label: Text("Brand"), size: ColumnSize.M),
+      const DataColumn2(label: Text("Supplier"), size: ColumnSize.M),
+      const DataColumn2(label: Text("Image"), size: ColumnSize.M),
+      const DataColumn2(label: Text("Description"), size: ColumnSize.M),
+    ];
+  }
+
+  Widget _buildInventoryNumber(BuildContext context) {
+    final int inventoryListLength = inventoryController.iventoryItemList.length;
+    return Padding(
+      padding: const EdgeInsets.all(0),
+      child: Container(
+        width: inventoryListLength < 100
+            ? 40
+            : inventoryListLength < 1000
+                ? 50
+                : inventoryListLength < 10000
+                    ? 60
+                    : double.infinity,
+        height: 40,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50),
+            color: Theme.of(context)
+                .colorScheme
+                .secondaryContainer
+                .withOpacity(0.5),
+            border: Border.all(
+              color: Theme.of(context)
+                  .colorScheme
+                  .onPrimaryContainer
+                  .withOpacity(0.5),
+            )),
+        child: Text(inventoryController.iventoryItemList.length.toString()),
+      ),
+    );
+  }
+
+  List<DataRow> _buildDataRow(BuildContext context) {
+    return [
+      for (final (idx, item) in inventoryController.iventoryItemList.indexed)
+        DataRow(
+          cells: <DataCell>[
+            DataCell(IconButton(
+              onPressed: () {
+                // inventoryController.removeItem(idx);
+              },
+              icon: const Icon(
+                Icons.search,
+                size: 15,
+              ),
+            )),
+            DataCell(Text(item.code.toString())),
+            DataCell(SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Text(item.name.toString()))),
+            DataCell(Text(item.qty.toString())),
+            DataCell(Text(item.cost.toString())),
+            DataCell(Text(item.price.toString())),
+            DataCell(SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Text(item.category.toString()))),
+            DataCell(SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Text(item.brand.toString()))),
+            DataCell(SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Text(item.supplier.toString()))),
+            DataCell(item.image == null
+                ? const SizedBox()
+                : Image(
+                    image: MemoryImage(base64Decode(item.image.toString())),
+                  )),
+            DataCell(SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Text(item.description.toString()))),
+          ],
+        )
+    ];
   }
 }
