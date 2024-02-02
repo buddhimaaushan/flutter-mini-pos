@@ -51,44 +51,11 @@ class Brand extends StatelessWidget {
 
   List<DataColumn> _buildDataColumns(BuildContext context) {
     return [
-      DataColumn2(label: _buildInventoryNumber(context), size: ColumnSize.S),
-      const DataColumn2(label: Text("Id")),
-      const DataColumn2(
-        label: Text("Brand Name"),
-      ),
-      const DataColumn2(label: Text("Description")),
+      const DataColumn2(label: Text(""), size: ColumnSize.S),
+      const DataColumn2(label: Text("Id"), size: ColumnSize.L),
+      const DataColumn2(label: Text("Brand Name"), size: ColumnSize.L),
+      const DataColumn2(label: Text("Description"), size: ColumnSize.L),
     ];
-  }
-
-  Widget _buildInventoryNumber(BuildContext context) {
-    final int inventoryListLength = brandBrandController.brandItemList.length;
-    return Padding(
-      padding: const EdgeInsets.all(0),
-      child: Container(
-        width: inventoryListLength < 100
-            ? 40
-            : inventoryListLength < 1000
-                ? 50
-                : inventoryListLength < 10000
-                    ? 60
-                    : double.infinity,
-        height: 40,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            color: Theme.of(context)
-                .colorScheme
-                .secondaryContainer
-                .withOpacity(0.5),
-            border: Border.all(
-              color: Theme.of(context)
-                  .colorScheme
-                  .onPrimaryContainer
-                  .withOpacity(0.5),
-            )),
-        child: Text(brandBrandController.brandItemList.length.toString()),
-      ),
-    );
   }
 
   List<DataRow> _buildDataRow(BuildContext context) {
