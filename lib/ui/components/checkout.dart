@@ -20,6 +20,8 @@ class Checkout extends StatelessWidget {
             Expanded(
                 child: checkoutTabPaneController.checkoutTabPaneList[
                     checkoutTabPaneController.checkoutTabPaneSelected.value]),
+            const SizedBox(height: 10),
+            _buildFooterBar(context),
           ])),
     );
   }
@@ -94,6 +96,21 @@ class Checkout extends StatelessWidget {
           // iconSize: 20,
         ),
       ]),
+    );
+  }
+
+  Widget _buildFooterBar(BuildContext context) {
+    return Container(
+      height: 60,
+      width: double.infinity,
+      decoration: BoxDecoration(
+          color:
+              Theme.of(context).colorScheme.secondaryContainer.withOpacity(0.2),
+          borderRadius: BorderRadius.circular(10)),
+      clipBehavior: Clip.antiAlias,
+      child: Row(
+        children: const [],
+      ),
     );
   }
 }

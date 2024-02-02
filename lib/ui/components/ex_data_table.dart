@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 class ExDataTable extends StatelessWidget {
   final List<DataColumn> headers;
   final List<DataRow> rows;
+  final int fixedLeftColumns;
+  final int fixedTopRows;
 
   final bool isLoading;
 
@@ -11,7 +13,9 @@ class ExDataTable extends StatelessWidget {
       {Key? key,
       required this.headers,
       required this.rows,
-      required this.isLoading})
+      required this.isLoading,
+      this.fixedLeftColumns = 0,
+      this.fixedTopRows = 0})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -23,7 +27,8 @@ class ExDataTable extends StatelessWidget {
       smRatio: 0.5,
       columnSpacing: 10,
       dataRowHeight: 55,
-      fixedLeftColumns: 3,
+      fixedLeftColumns: fixedLeftColumns,
+      fixedTopRows: fixedTopRows,
       horizontalMargin: 10,
       isVerticalScrollBarVisible: true,
       isHorizontalScrollBarVisible: true,
