@@ -23,6 +23,7 @@ class CheckoutTabPane extends StatelessWidget {
         ),
         clipBehavior: Clip.antiAlias,
         child: ExDataTable(
+            fixedLeftColumns: 3,
             headers: _buildDataColumns(context),
             rows: _buildDataRow(context),
             isLoading: false)));
