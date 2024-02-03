@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mini_pos/controllers/inventory_controller.dart';
 import 'package:mini_pos/ui/components/datatable_item_count.dart';
+import 'package:mini_pos/ui/components/ex_text_icon_button.dart';
 import 'package:mini_pos/ui/components/page_name.dart';
 
 import 'ex_data_table.dart';
@@ -28,6 +29,12 @@ class Inventory extends StatelessWidget {
             ),
             const SizedBox(width: 10),
             _buildHeaderBar(context),
+            const SizedBox(width: 10),
+            const ExTextIconButton(
+              icon: Icon(Icons.add),
+              title: "Add New Inventory",
+              size: Size(60, 60),
+            )
           ],
         ),
         const SizedBox(height: 10),

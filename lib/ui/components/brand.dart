@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mini_pos/controllers/brand_controller.dart';
 import 'package:mini_pos/ui/components/datatable_item_count.dart';
+import 'package:mini_pos/ui/components/ex_text_icon_button.dart';
 import 'package:mini_pos/ui/components/page_name.dart';
 
 import 'ex_data_table.dart';
@@ -27,7 +28,11 @@ class Brand extends StatelessWidget {
             const SizedBox(width: 10),
             _buildHeaderBar(context),
             const SizedBox(width: 10),
-            _buildAddNewButton(context)
+            const ExTextIconButton(
+              icon: Icon(Icons.add),
+              title: "Add New Brand",
+              size: Size(60, 60),
+            )
           ],
         ),
         const SizedBox(height: 10),
@@ -65,23 +70,6 @@ class Brand extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildAddNewButton(BuildContext context) {
-    return TextButton.icon(
-      onPressed: () => {},
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(
-            Theme.of(context).colorScheme.primaryContainer),
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-        )),
-        minimumSize: MaterialStateProperty.all<Size>(const Size(60, 60)),
-      ),
-      icon: const Icon(Icons.add),
-      label: const Text("Add New Brand"),
     );
   }
 
