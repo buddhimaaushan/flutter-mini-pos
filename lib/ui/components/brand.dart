@@ -21,11 +21,13 @@ class Brand extends StatelessWidget {
           children: [
             const PageName(
               title: "BRAND",
-              height: 60,
+              height: 52,
               padding: EdgeInsets.symmetric(horizontal: 20),
             ),
             const SizedBox(width: 10),
             _buildHeaderBar(context),
+            const SizedBox(width: 10),
+            _buildAddNewButton(context)
           ],
         ),
         const SizedBox(height: 10),
@@ -46,7 +48,7 @@ class Brand extends StatelessWidget {
   Widget _buildHeaderBar(BuildContext context) {
     return Flexible(
       child: Container(
-        height: 60,
+        height: 52,
         decoration: BoxDecoration(
             color: Theme.of(context)
                 .colorScheme
@@ -55,12 +57,31 @@ class Brand extends StatelessWidget {
             borderRadius: BorderRadius.circular(10)),
         clipBehavior: Clip.antiAlias,
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             DataTableItemCount(
+                title: "BRAND ITEM COUNT",
                 itemCount: brandBrandController.brandItemList.length),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildAddNewButton(BuildContext context) {
+    return TextButton.icon(
+      onPressed: () => {},
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(
+            Theme.of(context).colorScheme.primaryContainer),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        )),
+        minimumSize: MaterialStateProperty.all<Size>(const Size(60, 60)),
+      ),
+      icon: const Icon(Icons.add),
+      label: const Text("Add New Brand"),
     );
   }
 

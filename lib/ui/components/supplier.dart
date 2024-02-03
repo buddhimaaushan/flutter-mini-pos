@@ -22,7 +22,7 @@ class Supplier extends StatelessWidget {
           children: [
             const PageName(
               title: "SUPPLIER",
-              height: 60,
+              height: 52,
               padding: EdgeInsets.symmetric(horizontal: 20),
             ),
             const SizedBox(width: 10),
@@ -47,7 +47,7 @@ class Supplier extends StatelessWidget {
   Widget _buildHeaderBar(BuildContext context) {
     return Flexible(
       child: Container(
-        height: 60,
+        height: 52,
         decoration: BoxDecoration(
             color: Theme.of(context)
                 .colorScheme
@@ -58,6 +58,7 @@ class Supplier extends StatelessWidget {
         child: Row(
           children: [
             DataTableItemCount(
+                title: "SUPPLIER ITEM COUNT",
                 itemCount: supplierSupplierController.supplierItemList.length),
           ],
         ),

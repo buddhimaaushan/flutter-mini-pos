@@ -26,7 +26,7 @@ class PageName extends StatelessWidget {
         title,
         style: TextStyle(
           fontSize: 16,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w700,
           letterSpacing: 1,
           color: Theme.of(context)
               .colorScheme
