@@ -2,6 +2,7 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mini_pos/controllers/brand_controller.dart';
+import 'package:mini_pos/ui/components/datatable_item_count.dart';
 
 import 'ex_data_table.dart';
 
@@ -34,7 +35,7 @@ class Brand extends StatelessWidget {
 
   Widget _buildHeaderBar(BuildContext context) {
     return Container(
-      height: 60,
+      height: 70,
       width: double.infinity,
       decoration: BoxDecoration(
           color:
@@ -42,7 +43,10 @@ class Brand extends StatelessWidget {
           borderRadius: BorderRadius.circular(10)),
       clipBehavior: Clip.antiAlias,
       child: Row(
-        children: const [],
+        children: [
+          DataTableItemCount(
+              itemCount: brandBrandController.brandItemList.length),
+        ],
       ),
     );
   }
