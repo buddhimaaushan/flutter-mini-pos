@@ -22,7 +22,7 @@ class Supplier extends StatelessWidget {
           children: [
             const PageName(
               title: "SUPPLIER",
-              height: 70,
+              height: 60,
               padding: EdgeInsets.symmetric(horizontal: 20),
             ),
             const SizedBox(width: 10),
@@ -47,7 +47,7 @@ class Supplier extends StatelessWidget {
   Widget _buildHeaderBar(BuildContext context) {
     return Flexible(
       child: Container(
-        height: 70,
+        height: 60,
         decoration: BoxDecoration(
             color: Theme.of(context)
                 .colorScheme

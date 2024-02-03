@@ -9,38 +9,27 @@ class DataTableItemCount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 120,
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      child: Column(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            "ITEM COUNT",
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              color: Theme.of(context)
-                  .colorScheme
-                  .onSecondaryContainer
-                  .withOpacity(0.4),
-            ),
-          ),
           Container(
-            // width: 40,
-            // height: 40,
-            margin: const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
-            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 2),
+            width: 80,
+            height: 40,
+            margin: const EdgeInsets.only(right: 10),
+            padding: const EdgeInsets.only(left: 15, right: 15, bottom: 2),
             alignment: Alignment.centerRight,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
+                borderRadius: BorderRadius.circular(20),
                 color: Theme.of(context)
                     .colorScheme
                     .secondaryContainer
-                    .withOpacity(0.5),
+                    .withOpacity(0.2),
                 border: Border.all(
                   color: Theme.of(context)
                       .colorScheme
                       .onPrimaryContainer
-                      .withOpacity(0.2),
+                      .withOpacity(0.1),
                 )),
             child: Text(
               itemCount.toString(),
@@ -52,7 +41,33 @@ class DataTableItemCount extends StatelessWidget {
                     .withOpacity(0.4),
               ),
             ),
-          )
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "ITEM",
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onSecondaryContainer
+                      .withOpacity(0.4),
+                ),
+              ),
+              Text(
+                "COUNT",
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onSecondaryContainer
+                      .withOpacity(0.4),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
