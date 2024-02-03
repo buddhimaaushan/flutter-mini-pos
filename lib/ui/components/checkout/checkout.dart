@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mini_pos/controllers/checkout_controller.dart';
+import 'package:mini_pos/ui/components/page_name.dart';
 
 class Checkout extends StatelessWidget {
   const Checkout({Key? key}) : super(key: key);
@@ -14,8 +15,17 @@ class Checkout extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       child: Obx(() =>
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Row(),
-            _buildTab(context),
+            Row(
+              children: [
+                const PageName(
+                  title: "CHECKOUT",
+                  height: 53,
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                ),
+                const SizedBox(width: 10),
+                _buildTab(context),
+              ],
+            ),
             const SizedBox(height: 10),
             Expanded(
                 child: checkoutTabPaneController.checkoutTabPaneList[
@@ -33,7 +43,7 @@ class Checkout extends StatelessWidget {
         for (final (idx, _)
             in checkoutTabPaneController.checkoutTabPaneList.indexed)
           Padding(
-            padding: const EdgeInsets.only(right: 5),
+            padding: const EdgeInsets.only(right: 10),
             child: TextButton(
               onPressed: () => checkoutTabPaneController.selectTab(idx),
               style: ButtonStyle(

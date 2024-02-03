@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mini_pos/controllers/category_controller.dart';
 import 'package:mini_pos/ui/components/datatable_item_count.dart';
+import 'package:mini_pos/ui/components/page_name.dart';
 
 import 'ex_data_table.dart';
 
@@ -17,8 +18,17 @@ class Category extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(10),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        const Row(),
-        _buildHeaderBar(context),
+        Row(
+          children: [
+            const PageName(
+              title: "CATEGORY",
+              height: 70,
+              padding: EdgeInsets.symmetric(horizontal: 20),
+            ),
+            const SizedBox(width: 10),
+            _buildHeaderBar(context),
+          ],
+        ),
         const SizedBox(height: 10),
         Expanded(
             child: Obx(() => Container(
@@ -35,19 +45,22 @@ class Category extends StatelessWidget {
   }
 
   Widget _buildHeaderBar(BuildContext context) {
-    return Container(
-      height: 70,
-      width: double.infinity,
-      decoration: BoxDecoration(
-          color:
-              Theme.of(context).colorScheme.secondaryContainer.withOpacity(0.2),
-          borderRadius: BorderRadius.circular(10)),
-      clipBehavior: Clip.antiAlias,
-      child: Row(
-        children: [
-          DataTableItemCount(
-              itemCount: categoryCategoryController.categoryItemList.length),
-        ],
+    return Flexible(
+      child: Container(
+        height: 70,
+        decoration: BoxDecoration(
+            color: Theme.of(context)
+                .colorScheme
+                .secondaryContainer
+                .withOpacity(0.2),
+            borderRadius: BorderRadius.circular(10)),
+        clipBehavior: Clip.antiAlias,
+        child: Row(
+          children: [
+            DataTableItemCount(
+                itemCount: categoryCategoryController.categoryItemList.length),
+          ],
+        ),
       ),
     );
   }
