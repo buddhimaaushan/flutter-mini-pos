@@ -2,7 +2,9 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mini_pos/controllers/category_controller.dart';
+import 'package:mini_pos/ui/components/add_item_dialog.dart';
 import 'package:mini_pos/ui/components/datatable_item_count.dart';
+import 'package:mini_pos/ui/components/dialog_text_field.dart';
 import 'package:mini_pos/ui/components/ex_text_icon_button.dart';
 import 'package:mini_pos/ui/components/page_name.dart';
 
@@ -11,8 +13,7 @@ import 'ex_data_table.dart';
 class Category extends StatelessWidget {
   const Category({Key? key}) : super(key: key);
 
-  CategoryController get categoryCategoryController =>
-      Get.put(CategoryController());
+  CategoryController get categoryController => Get.put(CategoryController());
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +30,13 @@ class Category extends StatelessWidget {
             const SizedBox(width: 10),
             _buildHeaderBar(context),
             const SizedBox(width: 10),
-            const ExTextIconButton(
-              icon: Icon(Icons.add),
+            ExTextIconButton(
+              icon: const Icon(Icons.add),
               title: "Add New Category",
-              size: Size(60, 60),
+              size: const Size(60, 60),
+              onPressed: () {
+                _handleAddNewButton(context);
+              },
             )
           ],
         ),
@@ -66,7 +70,7 @@ class Category extends StatelessWidget {
           children: [
             DataTableItemCount(
                 title: "CATEGORY ITEM COUNT",
-                itemCount: categoryCategoryController.categoryItemList.length),
+                itemCount: categoryController.categoryItemList.length),
           ],
         ),
       ),
@@ -84,13 +88,12 @@ class Category extends StatelessWidget {
 
   List<DataRow> _buildDataRow(BuildContext context) {
     return [
-      for (final (idx, item)
-          in categoryCategoryController.categoryItemList.indexed)
+      for (final (idx, item) in categoryController.categoryItemList.indexed)
         DataRow(
           cells: <DataCell>[
             DataCell(IconButton(
               onPressed: () {
-                // categoryCategoryController.removeItem(idx);
+                // categoryController.removeItem(idx);
               },
               icon: const Icon(
                 Icons.search,
@@ -107,5 +110,39 @@ class Category extends StatelessWidget {
           ],
         )
     ];
+  }
+
+  void _handleAddNewButton(BuildContext context) {
+    _buildNewCategoryDialog(context);
+  }
+
+  void _buildNewCategoryDialog(BuildContext context) {
+    String categoryName = "";
+    String categoryDescription = "";
+    Get.dialog(
+      AddItemDialog(
+        title: "Category",
+        dialogTextFieldList: [
+          DialogTextField(
+            label: "Category Name",
+            onFieldChanged: (value) {
+              categoryName = value;
+            },
+          ),
+          DialogTextField(
+            label: "Description",
+            onFieldChanged: (value) {
+              categoryDescription = value;
+            },
+          ),
+        ],
+        onPressedAddItem: () {
+          categoryController.addItem(
+              name: categoryName, description: categoryDescription);
+          Get.back();
+        },
+      ),
+      useSafeArea: true,
+    );
   }
 }
