@@ -2,7 +2,9 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mini_pos/controllers/brand_controller.dart';
+import 'package:mini_pos/ui/components/add_item_dialog.dart';
 import 'package:mini_pos/ui/components/datatable_item_count.dart';
+import 'package:mini_pos/ui/components/dialog_text_field.dart';
 import 'package:mini_pos/ui/components/ex_text_icon_button.dart';
 import 'package:mini_pos/ui/components/page_name.dart';
 
@@ -11,7 +13,7 @@ import 'ex_data_table.dart';
 class Brand extends StatelessWidget {
   const Brand({Key? key}) : super(key: key);
 
-  BrandController get brandBrandController => Get.put(BrandController());
+  BrandController get brandController => Get.put(BrandController());
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +30,13 @@ class Brand extends StatelessWidget {
             const SizedBox(width: 10),
             _buildHeaderBar(context),
             const SizedBox(width: 10),
-            const ExTextIconButton(
-              icon: Icon(Icons.add),
+            ExTextIconButton(
+              icon: const Icon(Icons.add),
               title: "Add New Brand",
-              size: Size(60, 60),
+              size: const Size(60, 60),
+              onPressed: () {
+                _handleAddNewButton(context);
+              },
             )
           ],
         ),
@@ -66,7 +71,7 @@ class Brand extends StatelessWidget {
           children: [
             DataTableItemCount(
                 title: "BRAND ITEM COUNT",
-                itemCount: brandBrandController.brandItemList.length),
+                itemCount: brandController.brandItemList.length),
           ],
         ),
       ),
@@ -84,12 +89,12 @@ class Brand extends StatelessWidget {
 
   List<DataRow> _buildDataRow(BuildContext context) {
     return [
-      for (final (idx, item) in brandBrandController.brandItemList.indexed)
+      for (final (idx, item) in brandController.brandItemList.indexed)
         DataRow(
           cells: <DataCell>[
             DataCell(IconButton(
               onPressed: () {
-                // brandBrandController.removeItem(idx);
+                // brandController.removeItem(idx);
               },
               icon: const Icon(
                 Icons.search,
@@ -106,5 +111,39 @@ class Brand extends StatelessWidget {
           ],
         )
     ];
+  }
+
+  void _handleAddNewButton(BuildContext context) {
+    _buildNewBrandDialog(context);
+  }
+
+  void _buildNewBrandDialog(BuildContext context) {
+    String brandName = "";
+    String brandDescription = "";
+    Get.dialog(
+      AddItemDialog(
+        title: "Brand",
+        dialogTextFieldList: [
+          DialogTextField(
+            label: "Brand Name",
+            onFieldChanged: (value) {
+              brandName = value;
+            },
+          ),
+          DialogTextField(
+            label: "Description",
+            onFieldChanged: (value) {
+              brandDescription = value;
+            },
+          ),
+        ],
+        onPressedAddItem: () {
+          brandController.addItem(
+              name: brandName, description: brandDescription);
+          Get.back();
+        },
+      ),
+      useSafeArea: true,
+    );
   }
 }

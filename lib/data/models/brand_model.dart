@@ -38,8 +38,4 @@ class BrandItem {
       description: "Crocodile",
     ),
   ];
-
-  static getBrandById(String id) {
-    return brands.firstWhere((element) => element.id == id);
-  }
 }
