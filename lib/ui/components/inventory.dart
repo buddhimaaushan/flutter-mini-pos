@@ -66,9 +66,13 @@ class Inventory extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         child: Row(
           children: [
-            DataTableItemCount(
-                title: "INVENTORY ITEM COUNT",
-                itemCount: inventoryController.iventoryItemList.length),
+            Obx(
+              () => SingleChildScrollView(
+                child: DataTableItemCount(
+                    title: "INVENTORY ITEM COUNT",
+                    itemCount: inventoryController.iventoryItemList.length),
+              ),
+            )
           ],
         ),
       ),

@@ -32,7 +32,7 @@ class Supplier extends StatelessWidget {
             const SizedBox(width: 10),
             ExTextIconButton(
               icon: const Icon(Icons.add),
-              title: "Add New Brand",
+              title: "Add New Supplier",
               size: const Size(60, 60),
               onPressed: () {
                 _handleAddNewButton(context);
@@ -68,9 +68,13 @@ class Supplier extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         child: Row(
           children: [
-            DataTableItemCount(
-                title: "SUPPLIER ITEM COUNT",
-                itemCount: supplierController.supplierItemList.length),
+            Obx(
+              () => SingleChildScrollView(
+                child: DataTableItemCount(
+                    title: "SUPPLIER ITEM COUNT",
+                    itemCount: supplierController.supplierItemList.length),
+              ),
+            )
           ],
         ),
       ),
@@ -117,28 +121,28 @@ class Supplier extends StatelessWidget {
   }
 
   void _buildNewSupplierDialog(BuildContext context) {
-    String brandName = "";
-    String brandDescription = "";
+    String supplierName = "";
+    String supplierDescription = "";
     Get.dialog(
       AddItemDialog(
-        title: "Brand",
+        title: "Supplier",
         dialogTextFieldList: [
           DialogTextField(
-            label: "Brand Name",
+            label: "Supplier Name",
             onFieldChanged: (value) {
-              brandName = value;
+              supplierName = value;
             },
           ),
           DialogTextField(
             label: "Description",
             onFieldChanged: (value) {
-              brandDescription = value;
+              supplierDescription = value;
             },
           ),
         ],
         onPressedAddItem: () {
           supplierController.addItem(
-              name: brandName, description: brandDescription);
+              name: supplierName, description: supplierDescription);
           Get.back();
         },
       ),

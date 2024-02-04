@@ -68,9 +68,13 @@ class Category extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         child: Row(
           children: [
-            DataTableItemCount(
-                title: "CATEGORY ITEM COUNT",
-                itemCount: categoryController.categoryItemList.length),
+            Obx(
+              () => SingleChildScrollView(
+                child: DataTableItemCount(
+                    title: "CATEGORY ITEM COUNT",
+                    itemCount: categoryController.categoryItemList.length),
+              ),
+            )
           ],
         ),
       ),

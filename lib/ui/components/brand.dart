@@ -69,9 +69,13 @@ class Brand extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            DataTableItemCount(
-                title: "BRAND ITEM COUNT",
-                itemCount: brandController.brandItemList.length),
+            Obx(
+              () => SingleChildScrollView(
+                child: DataTableItemCount(
+                    title: "BRAND ITEM COUNT",
+                    itemCount: brandController.brandItemList.length),
+              ),
+            )
           ],
         ),
       ),
