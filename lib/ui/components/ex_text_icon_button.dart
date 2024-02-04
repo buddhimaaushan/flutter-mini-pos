@@ -16,7 +16,7 @@ class ExTextIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton.icon(
-      onPressed: () => {},
+      onPressed: onPressed,
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(
             Theme.of(context).colorScheme.primaryContainer),
