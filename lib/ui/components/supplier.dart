@@ -2,7 +2,9 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mini_pos/controllers/supplier_controller.dart';
+import 'package:mini_pos/ui/components/add_item_dialog.dart';
 import 'package:mini_pos/ui/components/datatable_item_count.dart';
+import 'package:mini_pos/ui/components/dialog_text_field.dart';
 import 'package:mini_pos/ui/components/ex_text_icon_button.dart';
 import 'package:mini_pos/ui/components/page_name.dart';
 
@@ -11,8 +13,7 @@ import 'ex_data_table.dart';
 class Supplier extends StatelessWidget {
   const Supplier({Key? key}) : super(key: key);
 
-  SupplierController get supplierSupplierController =>
-      Get.put(SupplierController());
+  SupplierController get supplierController => Get.put(SupplierController());
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +30,13 @@ class Supplier extends StatelessWidget {
             const SizedBox(width: 10),
             _buildHeaderBar(context),
             const SizedBox(width: 10),
-            const ExTextIconButton(
-              icon: Icon(Icons.add),
-              title: "Add New Supplier",
-              size: Size(60, 60),
+            ExTextIconButton(
+              icon: const Icon(Icons.add),
+              title: "Add New Brand",
+              size: const Size(60, 60),
+              onPressed: () {
+                _handleAddNewButton(context);
+              },
             )
           ],
         ),
@@ -66,7 +70,7 @@ class Supplier extends StatelessWidget {
           children: [
             DataTableItemCount(
                 title: "SUPPLIER ITEM COUNT",
-                itemCount: supplierSupplierController.supplierItemList.length),
+                itemCount: supplierController.supplierItemList.length),
           ],
         ),
       ),
@@ -84,13 +88,12 @@ class Supplier extends StatelessWidget {
 
   List<DataRow> _buildDataRow(BuildContext context) {
     return [
-      for (final (idx, item)
-          in supplierSupplierController.supplierItemList.indexed)
+      for (final (idx, item) in supplierController.supplierItemList.indexed)
         DataRow(
           cells: <DataCell>[
             DataCell(IconButton(
               onPressed: () {
-                // supplierSupplierController.removeItem(idx);
+                // supplierController.removeItem(idx);
               },
               icon: const Icon(
                 Icons.search,
@@ -107,5 +110,39 @@ class Supplier extends StatelessWidget {
           ],
         )
     ];
+  }
+
+  void _handleAddNewButton(BuildContext context) {
+    _buildNewSupplierDialog(context);
+  }
+
+  void _buildNewSupplierDialog(BuildContext context) {
+    String brandName = "";
+    String brandDescription = "";
+    Get.dialog(
+      AddItemDialog(
+        title: "Brand",
+        dialogTextFieldList: [
+          DialogTextField(
+            label: "Brand Name",
+            onFieldChanged: (value) {
+              brandName = value;
+            },
+          ),
+          DialogTextField(
+            label: "Description",
+            onFieldChanged: (value) {
+              brandDescription = value;
+            },
+          ),
+        ],
+        onPressedAddItem: () {
+          supplierController.addItem(
+              name: brandName, description: brandDescription);
+          Get.back();
+        },
+      ),
+      useSafeArea: true,
+    );
   }
 }
