@@ -3,14 +3,20 @@ import 'package:flutter/material.dart';
 class ExTextFormField extends StatelessWidget {
   final String initialValue;
   final Color fillColor;
-  final void Function(String, TextEditingController)? onFieldSubmitted;
+  final void Function(
+    String,
+  )? onFieldSubmitted;
+  final void Function(
+    String,
+  )? onFieldChanged;
 
-  const ExTextFormField(
-      {Key? key,
-      required this.initialValue,
-      required this.fillColor,
-      this.onFieldSubmitted})
-      : super(key: key);
+  const ExTextFormField({
+    Key? key,
+    required this.initialValue,
+    required this.fillColor,
+    this.onFieldSubmitted,
+    this.onFieldChanged,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +32,8 @@ class ExTextFormField extends StatelessWidget {
         signed: false,
         decimal: false,
       ),
-      onFieldSubmitted: (value) {
-        onFieldSubmitted!(value, textEditingController);
-      },
+      onFieldSubmitted: onFieldSubmitted,
+      onChanged: onFieldChanged,
       decoration: InputDecoration(
         border: InputBorder.none,
         filled: true,

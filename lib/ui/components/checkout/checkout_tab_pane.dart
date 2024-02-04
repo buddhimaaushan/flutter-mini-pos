@@ -163,22 +163,20 @@ class CheckoutTabPane extends StatelessWidget {
               .colorScheme
               .secondaryContainer
               .withOpacity(item.id.value == "initial" ? 1 : 0.2),
-          onFieldSubmitted: (value, textEditingController) =>
-              _handleOrderQty(textEditingController, value, item),
+          onFieldSubmitted: (value) => _handleOrderQty(value, item),
         ));
   }
 
-  void _handleOrderQty(TextEditingController textEditingController,
-      String value, CheckoutItem item) {
+  void _handleOrderQty(String value, CheckoutItem item) {
     if (value.isEmpty || int.parse(value) <= 1) {
       value = 1.toString();
     } else if (int.parse(value) > item.avQty.value) {
       value = item.avQty.value.toString();
     }
 
-    textEditingController.value = TextEditingValue(
-      text: value,
-    );
+    // textEditingController.value = TextEditingValue(
+    //   text: value,
+    // );
     item.ordQty.value = int.parse(value);
   }
 }
