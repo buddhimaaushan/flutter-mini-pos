@@ -67,7 +67,7 @@ class Inventory extends StatelessWidget {
   }
 
   Widget _buildHeaderBar(BuildContext context) {
-    return Flexible(
+    return Expanded(
       child: Container(
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
