@@ -35,6 +35,13 @@ class ExDropdownMenu extends StatelessWidget {
         fillColor: fillColor,
         contentPadding: const EdgeInsets.only(left: 15, right: 5, bottom: 6),
       ),
+      menuStyle: MenuStyle(
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      ),
     );
   }
 }
