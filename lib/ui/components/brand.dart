@@ -5,6 +5,7 @@ import 'package:mini_pos/controllers/brand_controller.dart';
 import 'package:mini_pos/ui/components/add_item_dialog.dart';
 import 'package:mini_pos/ui/components/datatable_item_count.dart';
 import 'package:mini_pos/ui/components/dialog_text_field.dart';
+import 'package:mini_pos/ui/components/ex_dialog.dart';
 import 'package:mini_pos/ui/components/ex_text_icon_button.dart';
 import 'package:mini_pos/ui/components/page_name.dart';
 
@@ -122,8 +123,11 @@ class Brand extends StatelessWidget {
   }
 
   void _buildNewBrandDialog(BuildContext context) {
-    String brandName = "";
-    String brandDescription = "";
+    var item = <String, dynamic>{
+      "brandName": "",
+      "brandDescription": "",
+    };
+
     Get.dialog(
       AddItemDialog(
         title: "Brand",
@@ -131,23 +135,33 @@ class Brand extends StatelessWidget {
           DialogTextField(
             label: "Brand Name",
             onFieldChanged: (value) {
-              brandName = value;
+              item["brandName"] = value;
             },
           ),
           DialogTextField(
             label: "Description",
             onFieldChanged: (value) {
-              brandDescription = value;
+              item["brandDescription"] = value;
             },
           ),
         ],
-        onPressedAddItem: () {
-          brandController.addItem(
-              name: brandName, description: brandDescription);
-          Get.back();
-        },
+        onPressedAddItem: () => _handleAddItemButton(item),
       ),
       useSafeArea: true,
     );
+  }
+
+  void _handleAddItemButton(Map<String, dynamic> item) {
+    try {
+      if (item["brandName"].isEmpty) {
+        throw Exception("Brand name cannot be empty");
+      }
+
+      brandController.addItem(
+          name: item["brandName"], description: item["brandDescription"]);
+      Get.back();
+    } catch (e) {
+      Get.dialog(ExDialog(title: "Error", message: e.toString()));
+    }
   }
 }

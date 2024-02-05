@@ -5,6 +5,7 @@ import 'package:mini_pos/controllers/category_controller.dart';
 import 'package:mini_pos/ui/components/add_item_dialog.dart';
 import 'package:mini_pos/ui/components/datatable_item_count.dart';
 import 'package:mini_pos/ui/components/dialog_text_field.dart';
+import 'package:mini_pos/ui/components/ex_dialog.dart';
 import 'package:mini_pos/ui/components/ex_text_icon_button.dart';
 import 'package:mini_pos/ui/components/page_name.dart';
 
@@ -121,8 +122,11 @@ class Category extends StatelessWidget {
   }
 
   void _buildNewCategoryDialog(BuildContext context) {
-    String categoryName = "";
-    String categoryDescription = "";
+    var item = <String, dynamic>{
+      "categoryName": "",
+      "categoryDescription": "",
+    };
+
     Get.dialog(
       AddItemDialog(
         title: "Category",
@@ -130,23 +134,33 @@ class Category extends StatelessWidget {
           DialogTextField(
             label: "Category Name",
             onFieldChanged: (value) {
-              categoryName = value;
+              item["categoryName"] = value;
             },
           ),
           DialogTextField(
             label: "Description",
             onFieldChanged: (value) {
-              categoryDescription = value;
+              item["categoryDescription"] = value;
             },
           ),
         ],
-        onPressedAddItem: () {
-          categoryController.addItem(
-              name: categoryName, description: categoryDescription);
-          Get.back();
-        },
+        onPressedAddItem: () => _handleAddItemButton(item),
       ),
       useSafeArea: true,
     );
+  }
+
+  void _handleAddItemButton(Map<String, dynamic> item) {
+    try {
+      if (item["categoryName"].isEmpty) {
+        throw Exception("Category name cannot be empty");
+      }
+
+      categoryController.addItem(
+          name: item["categoryName"], description: item["categoryDescription"]);
+      Get.back();
+    } catch (e) {
+      Get.dialog(ExDialog(title: "Error", message: e.toString()));
+    }
   }
 }
