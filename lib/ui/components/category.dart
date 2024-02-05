@@ -59,6 +59,9 @@ class Category extends StatelessWidget {
   Widget _buildHeaderBar(BuildContext context) {
     return Flexible(
       child: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20,
+        ),
         height: 52,
         decoration: BoxDecoration(
             color: Theme.of(context)
@@ -67,16 +70,17 @@ class Category extends StatelessWidget {
                 .withOpacity(0.2),
             borderRadius: BorderRadius.circular(10)),
         clipBehavior: Clip.antiAlias,
-        child: Row(
-          children: [
-            Obx(
-              () => SingleChildScrollView(
-                child: DataTableItemCount(
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              Obx(
+                () => DataTableItemCount(
                     title: "CATEGORY ITEM COUNT",
                     itemCount: categoryController.categoryItemList.length),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

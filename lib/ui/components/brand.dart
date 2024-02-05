@@ -59,6 +59,9 @@ class Brand extends StatelessWidget {
   Widget _buildHeaderBar(BuildContext context) {
     return Flexible(
       child: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20,
+        ),
         height: 52,
         decoration: BoxDecoration(
             color: Theme.of(context)
@@ -67,17 +70,18 @@ class Brand extends StatelessWidget {
                 .withOpacity(0.2),
             borderRadius: BorderRadius.circular(10)),
         clipBehavior: Clip.antiAlias,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Obx(
-              () => SingleChildScrollView(
-                child: DataTableItemCount(
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Obx(
+                () => DataTableItemCount(
                     title: "BRAND ITEM COUNT",
                     itemCount: brandController.brandItemList.length),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
